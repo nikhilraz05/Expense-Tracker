@@ -1,12 +1,13 @@
-// src/components/HomePage.js
-import React from 'react';
+import React, { useContext } from 'react';
+import { ExpenseContext } from '../contexts/ExpenseContext';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 
-// Register the necessary components with Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const HomePage = ({ income, expenses, balance }) => {
+const HomePage = () => {
+  const { income, expenses, balance } = useContext(ExpenseContext);
+
   const data = {
     labels: ['Income', 'Expenses', 'Balance'],
     datasets: [

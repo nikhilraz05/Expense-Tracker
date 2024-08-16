@@ -1,7 +1,8 @@
-// src/components/TransactionForm.js
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { ExpenseContext } from '../contexts/ExpenseContext';
 
-const TransactionForm = ({ transactions, setTransactions, setIncome, setExpenses, setBalance }) => {
+const TransactionForm = () => {
+  const { addTransaction } = useContext(ExpenseContext);
   const [type, setType] = useState('Income');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
@@ -10,16 +11,7 @@ const TransactionForm = ({ transactions, setTransactions, setIncome, setExpenses
 
   const handleAddTransaction = () => {
     const newTransaction = { type, amount: parseFloat(amount), category, date, description };
-    const updatedTransactions = [...transactions, newTransaction];
-    setTransactions(updatedTransactions);
-
-    if (type === 'Income') {
-      setIncome(prevIncome => prevIncome + parseFloat(amount));
-      setBalance(prevBalance => prevBalance + parseFloat(amount));
-    } else {
-      setExpenses(prevExpenses => prevExpenses + parseFloat(amount));
-      setBalance(prevBalance => prevBalance - parseFloat(amount));
-    }
+    addTransaction(newTransaction);
 
     // Clear form
     setType('Income');
